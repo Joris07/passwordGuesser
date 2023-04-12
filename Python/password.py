@@ -20,15 +20,6 @@ def toLower(items):
 def toUpper(items):
 	return [x.upper() for x in items]
 
-#Toutes les combinaisons de l33t
-def Leet2Combos(word):
-	possibles = []
-	char_map = {"a": "4","b": "8","e": "3","g": "6","i": "1","l": "1","o": "0","s": "5","t": "7","z": "2"}
-	for l in word.lower():
-		ll = char_map.get(l, l)
-		possibles.append((l,) if ll == l else (l, ll))
-	return [''.join(t) for t in itertools.product(*possibles)]
-
 #Tout en l33t
 def stringToL33t(message):
     char_map = {
@@ -87,10 +78,19 @@ def addAllRandomSpecialCharacters(word):
 	symbols = [" ", "!", '”', "#", "$", "%", "&", "’", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "`", "_", "{", "|", "}", "~"]
 	return ''.join('%s%s' % (x, random.choice(symbols) if random.random() > 0.5 else '') for x in word)
 
-"""def addAllRandomSpecialCharactersLimitNb(word, limit):
+def addAllRandomSpecialCharactersLimitNb(word, limit):
 	symbols = [" ", "!", '”', "#", "$", "%", "&", "’", "(", ")", "*", "+", ",", "-", ".", "/", ":", ";", ";", "<", "=", ">", "?", "@", "[", "\\", "]", "^", "`", "_", "{", "|", "}", "~"]
-	return ''.join('%s%s' % (x, random.choice(symbols) if random.random() > 0.5 else '') for index, x in word)
-"""
+	# Vérifier que le nombre de caractères à remplacer est inférieur ou égal à la longueur de la chaîne d'entrée
+	if limit > len(word):
+		raise ValueError("Le nombre de caractères à remplacer doit être inférieur ou égal à la longueur de la chaîne d'entrée.")
+
+	input_list = list(word)
+	replace_indexes = random.sample(range(len(input_list)), limit)
+	for index in replace_indexes:
+		input_list[index] = random.choice(symbols)
+
+	return ''.join(input_list)
+
 def returnMonthInLetters(monthNumber):
 	months_map = {
 		"01" : "janvier",
@@ -107,6 +107,15 @@ def returnMonthInLetters(monthNumber):
 		"12" : "decembre"
 	}
 	return months_map[monthNumber] if monthNumber in months_map else ""
+
+#Toutes les combinaisons de l33t
+def Leet2Combos(mot):
+	possibles = []
+	char_map = {"a": "4","b": "8","e": "3","g": "6","i": "1","l": "1","o": "0","s": "5","t": "7","z": "2"}
+	for l in mot.lower():
+		ll = char_map.get(l, l)
+		possibles.append((l,) if ll == l else (l, ll))
+	return [''.join(t) for t in itertools.product(*possibles)]
  
 # Driver Code
 if __name__ == '__main__':
@@ -114,8 +123,9 @@ if __name__ == '__main__':
 	items = json.loads(items)
 	items = jsonToList(items)
 	#print(addAllRandomSpecialCharacters("2022"))
-	print(findCombination(items))
-	#print(transformL33t(items))
+	#print(findCombination(items))
+	char_map = {"a": "4","b": "8","e": "3","g": "6","i": "1","l": "1","o": "0","s": "5","t": "7","z": "2"}
+	print(Leet2Combos("hello"))
 
 	
  
