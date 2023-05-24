@@ -1,18 +1,21 @@
-from .Config import Config
 from .Options.Leet import LeetMin, LeetMaj, LeetAll
 from .Options.Capitalize import ToCapitalize
 from .Options.Upper import ToUpper
-from .Options.Lower  import ToLower
+from .Options.Lower import ToLower
 from .Options.Accents import RemoveAccents
 from .Options.Characters import CommonCharacteres, AllCharacteres, NCharacters
-from .Options.Date import GetDay, GetMonth, GetYear
+from .Options.DateNumber import GetDayNumber, GetMonthNumber, GetYearNumber, GetYearNumber2Digits
+from .Options.DateText import GetDayText, GetMonthText
+import itertools
+import random
 
 class Engine:
-	def __init__(self, words, dates, options):
+	def __init__(self, words, dates, options, langs):
 		self.options = options
 		self.words = words
 		self.dates = dates
-		self.run()
+		self.langs = langs
+		self.listeFinal = self.run()
 	
 	def fct_addPossibilities(self, liste, in_words = True):
 		if in_words:
@@ -21,12 +24,18 @@ class Engine:
 			self.dates = list(set(self.dates + liste))
 
 	def run(self):
-		if self.options["get_day"]:
-			self.fct_addPossibilities(GetDay(self.dates).possibilites, False)
-		if self.options["get_month"]:
-			self.fct_addPossibilities(GetMonth(self.dates).possibilites, False)
-		if self.options["get_year"]:
-			self.fct_addPossibilities(GetYear(self.dates).possibilites, False)
+		if self.options["get_day_text"]:
+			self.fct_addPossibilities(GetDayText(self.dates, self.langs).possibilites)
+		if self.options["get_month_text"]:
+			self.fct_addPossibilities(GetMonthText(self.dates, self.langs).possibilites)
+		if self.options["get_day_number"]:
+			self.fct_addPossibilities(GetDayNumber(self.dates).possibilites, False)
+		if self.options["get_month_number"]:
+			self.fct_addPossibilities(GetMonthNumber(self.dates).possibilites, False)
+		if self.options["get_year_number"]:
+			self.fct_addPossibilities(GetYearNumber(self.dates).possibilites, False)
+		if self.options["get_year_number_two_digits"]:
+			self.fct_addPossibilities(GetYearNumber2Digits(self.dates).possibilites, False)
 		if self.options["to_capitalize"]:
 			self.fct_addPossibilities(ToCapitalize(self.words).possibilites)
 		if self.options["to_upper"]:
@@ -47,5 +56,11 @@ class Engine:
 			self.fct_addPossibilities(LeetMaj(self.words).possibilites)
 		if self.options["leet_all"]:
 			self.fct_addPossibilities(LeetAll(self.words).possibilites)
-		# 
-		# Leet à la fin
+
+		finalList = random.sample(self.words + self.dates, 3)
+
+		returnList = []
+		for i in range(1, len(finalList) + 1):
+			for p in itertools.permutations(finalList, i):
+				returnList.append("".join(p))
+		return returnList

@@ -2,12 +2,8 @@ from Liste_date_object import Liste_date
 from Liste_mot_object import Liste_mot
 from Classes.Engine import Engine
 
-#items_date = ["2022-01-07", "2022-04-10", "2021-10-25"]
-#items_mot = ["SiMéone", "JORîss"]
-#liste_date = Liste_date(items_date)
-#liste_mot = Liste_mot(items_mot)
 options = {
-    "leet_min": False,
+    "leet_min": True,
     "leet_maj": False,
     "leet_all": False,
     "to_capitalize": False,
@@ -17,9 +13,12 @@ options = {
     "common_characteres": False,
     "all_characteres": False,
     "n_characteres": False,
-    "get_day": True,
-    "get_month": True,
-    "get_year": True
+    "get_day_number": False,
+    "get_month_number": False,
+    "get_year_number": False,
+    "get_day_text": True,
+    "get_month_text": False,
+    "get_year_number_two_digits": False
 }
 
 words = [
@@ -27,15 +26,21 @@ words = [
     "éolienne"
 ]
 
+langs = [
+    "FR",
+    "EN"
+]
+
 dates = [
-    "2022-02-30",
+    "2022-02-09",
     "2023-08-21",
     "2022-06-10"
 ]
 
-engine = Engine(words, dates, options)
-print(engine.dates)
-print(len(engine.dates))
+engine = Engine(words, dates, options, langs)
+#print(engine.dates)
+print(engine.listeFinal)
+print(len(engine.listeFinal))
 
 
 #liste_date.fct_extractDaysOrMonthsOrYears(0)
