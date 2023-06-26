@@ -7,8 +7,8 @@ class Words(Possibilites):
   
 	@property
 	def words(self):
-		return self.__words
+		return self._words
 
 	@words.setter
 	def words(self, words):
-		self.__words = words
+		self._words = words

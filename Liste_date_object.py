@@ -1,4 +1,4 @@
-from Config_object import Config
+from Classes.Config import Config
 from datetime import datetime
 from babel.dates import format_date, format_datetime
 

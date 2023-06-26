@@ -125,8 +125,4 @@ if __name__ == '__main__':
 	#print(addAllRandomSpecialCharacters("2022"))
 	#print(findCombination(items))
 	char_map = {"a": "4","b": "8","e": "3","g": "6","i": "1","l": "1","o": "0","s": "5","t": "7","z": "2"}
-	print(Leet2Combos("hello"))
-
-	
- 
-
+	print(addAllRandomSpecialCharactersLimitNb("hello", 4))

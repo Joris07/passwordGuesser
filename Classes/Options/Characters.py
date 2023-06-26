@@ -49,6 +49,3 @@ class NCharacters(Characters):
     def __init__(self, words, limit):
         self.config = Config()
         super().__init__(words, self.config.allCaracteres, limit)
-
-
-

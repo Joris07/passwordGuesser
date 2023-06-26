@@ -41,5 +41,3 @@ class LeetAll(Leet):
 	def __init__(self, words):
 		self.config = Config()
 		super().__init__(words, self.config.char_map_all)
-
-
