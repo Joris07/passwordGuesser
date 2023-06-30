@@ -1,11 +1,10 @@
-from Liste_date_object import Liste_date
-from Liste_mot_object import Liste_mot
 from Classes.Engine import Engine
+from Classes.Config import Config
 
 options = {
-    "leet_min": False,
-    "leet_maj": False,
-    "leet_all": False,
+    "leet_min": True,
+    "leet_maj": True,
+    "leet_all": True,
     "to_capitalize": True,
     "to_upper": True,
     "to_lower": True,
@@ -13,26 +12,25 @@ options = {
     "common_characteres": True,
     "all_characteres": True,
     "n_characteres": True,
-    "get_day_number": False,
-    "get_month_number": False,
-    "get_year_number": False,
-    "get_day_text": False,
-    "get_month_text": False,
-    "get_year_number_two_digits": False
+    "get_day_number": True,
+    "get_month_number": True,
+    "get_year_number": True,
+    "get_day_text": True,
+    "get_month_text": True,
+    "get_year_number_two_digits": True
 }
 
 words = [
-    "alexandre"
+    "titi",
+    "tutu"
 ]
 
 langs = [
-    "FR"
+    Config.get_default_language()
 ]
 
 dates = [
-    "2022-02-09",
-    "2023-08-21",
-    "2022-06-10"
+    "0001-01-01"
 ]
 
 engine = Engine(words, dates, options, langs)

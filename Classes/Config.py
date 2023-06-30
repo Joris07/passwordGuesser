@@ -1,4 +1,5 @@
 class Config:
+	default_language = "FR" # Attribut Statique
 
 	def __init__(self):
 		self.char_map_maj = {
@@ -95,6 +96,10 @@ class Config:
 			"~"
 		]
 
+	@staticmethod # Méthode statique
+	def get_default_language():
+		return Config.default_language
+ 	
 	@property
 	def char_map_maj(self):
 		return self.__char_map_maj

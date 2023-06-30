@@ -22,7 +22,8 @@ class Engine:
 			self.words = list(set(self.words + liste))
 		else:
 			self.dates = list(set(self.dates + liste))
-
+   
+	# Composition dans les fonctions fct_addPossibilities
 	def run(self):
 		if self.options["get_day_text"]:
 			self.fct_addPossibilities(GetDayText(self.dates, self.langs).possibilites)
@@ -57,9 +58,8 @@ class Engine:
 		if self.options["leet_all"]:
 			self.fct_addPossibilities(LeetAll(self.words).possibilites)
 
-		print(len(self.words + self.dates))
-		finalList = random.sample(self.words + self.dates, 3)
-
+		finalList = random.sample(self.words + self.dates, 10)
+		#finalList = self.words + self.dates
 		returnList = []
 		for i in range(1, len(finalList) + 1):
 			for p in itertools.permutations(finalList, i):
