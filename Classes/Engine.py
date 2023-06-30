@@ -58,7 +58,7 @@ class Engine:
 		if self.options["leet_all"]:
 			self.fct_addPossibilities(LeetAll(self.words).possibilites)
 
-		finalList = random.sample(self.words + self.dates, 10)
+		finalList = random.sample(self.words + self.dates, 5)
 		#finalList = self.words + self.dates
 		returnList = []
 		for i in range(1, len(finalList) + 1):

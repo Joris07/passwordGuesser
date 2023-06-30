@@ -3,7 +3,7 @@
   <head>
     <title>Password guesser</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
-	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 	<script href="javascript.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   </head>
@@ -13,28 +13,92 @@
 			<h1>Password guesser</h1>
 			<div class="item">
 				<p>Mots:</p>
-				<input type="text" id="word" name="name" placeholder="Mots" />
+				<input type="text" id="word" name="word" placeholder="Mots" />
+				<button onclick="ajouterInput('word')">Ajouter</button>
 			</div>
 			<div class="item">
 				<p>Date:</p>
-				<input type="date" name="name"/>
+				<input type="date" name="date" />
+				<button onclick="ajouterInput('date')">Ajouter</button>
 			</div>
-			<div class="item status">
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Basculer toutes les lettres en minuscule</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Basculer toutes les lettres en majuscule</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Retirer les accents</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Utiliser le L33T pour toutes les lettres</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Utiliser les nombres des dates</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Transformer les dates en langage humain pour les mois</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Utiliser l'année sur 2 chiffres</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Utiliser l'année sur 4 chiffres</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Séparer les informations des dates pour les combiner avec les mots</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Ajouter les caractères spéciaux les plus communs (.$?!*)</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Ajouter tous les caractères spéciaux</span></label></div>
-				<div class="status-item"><label><input type="checkbox" name="name"> <span>Nombre de caractères spéciaux maximums dans la combinaison ?</span></label></div>
-			</div>
-			<button type="submit" href="/">Envoyer</button>
+			<div class="grid-container">
+				<div class="item status">
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Basculer toutes les lettres en minuscule</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Basculer toutes les lettres en majuscule</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Retirer les accents</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Utiliser le L33T pour toutes les lettres</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Utiliser les nombres des dates</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Transformer les dates en langage humain pour les mois</span></label></div>
+				</div>
+				<div class="item">
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Utiliser l'année sur 2 chiffres</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Utiliser l'année sur 4 chiffres</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Séparer les informations des dates pour les combiner avec les mots</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Ajouter les caractères spéciaux les plus communs (.$?!*)</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Ajouter tous les caractères spéciaux</span></label></div>
+					<div class="status-item"><label><input type="checkbox" name="name"> <span>Nombre de caractères spéciaux maximums dans la combinaison ?</span></label></div>
+				</div>
+			  </div>
+			<button type="submit" href="/" onclick="envoyer()">Envoyer</button>
+			<h1>Résultat :</h1>
+			<p id="result" style="padding: 20px;">
+
+			</p>
 		</div>
     </div>
   </body>
 </html>
+
+<script>
+function ajouterInput(type) {
+  var input = document.createElement("input");
+  input.name = type;
+  
+  if (type === 'word') {
+    var motsInput = document.getElementById("word");
+	input.placeholder = "Mots";
+    motsInput.parentNode.insertBefore(input, motsInput.nextSibling);
+  } else if (type === 'date') {
+    var dateInput = document.querySelector("input[type='date']");
+	input.type = "date";
+    dateInput.parentNode.insertBefore(input, dateInput.nextSibling);
+  }
+}
+
+function envoyer () {
+	const wordInputs = document.querySelectorAll('input[name="word"]');
+	const dateInputs = document.querySelectorAll('input[name="date"]');
+
+	const wordValues = [];
+	const dateValues = [];
+
+	wordInputs.forEach((input) => {
+		wordValues.push(input.value);
+	});
+
+	dateInputs.forEach((input) => {
+		dateValues.push(input.value);
+	});
+
+	const data = {
+		word: wordValues,
+		date: dateValues
+	};
+
+	fetch('http://localhost:5000/donnees', {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(data)
+	})
+	.then(response => response.json())
+	.then(data => {
+		console.log(data)
+		document.getElementById("result").textContent = data;
+	})
+	.catch(error => {
+		console.error('Une erreur s\'est produite:', error);
+	});
+}
+</script>
